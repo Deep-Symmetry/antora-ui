@@ -3,6 +3,10 @@
 }
 
 @media print {
+  .hide-for-print {
+    display: none !important;
+  }
+
   html {
     font-size: 90%;
   }
@@ -49,7 +53,7 @@
   }
 
   #topbar-nav,
-  .navigation-container,
+  .nav-container,
   .toolbar {
     display: none;
   }

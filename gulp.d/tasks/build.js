@@ -23,7 +23,7 @@ module.exports = (src, dest, preview) => () => {
   const opts = { base: src, cwd: src }
   const sourcemaps = preview || process.env.SOURCEMAPS === 'true'
   const postcssPlugins = [
-    postcssImport(),
+    postcssImport,
     postcssUrl([
       {
         filter: '**/~typeface-*/files/*',
@@ -38,8 +38,8 @@ module.exports = (src, dest, preview) => () => {
       },
     ]),
     postcssVar({ preserve: preview ? 'preserve-computed' : false }),
-    postcssCalc(),
-    autoprefixer({ browsers: ['last 2 versions'] }),
+    preview ? postcssCalc : () => {},
+    autoprefixer,
     preview ? () => {} : cssnano({ preset: 'default' }),
   ]
 
@@ -54,7 +54,9 @@ module.exports = (src, dest, preview) => () => {
         // see https://gulpjs.org/recipes/browserify-multiple-destination.html
         map((file, enc, next) => {
           if (file.relative.endsWith('.bundle.js')) {
-            file.contents = browserify(file.relative, { basedir: src, detectGlobals: false }).bundle()
+            file.contents = browserify(file.relative, { basedir: src, detectGlobals: false })
+              .plugin('browser-pack-flat/plugin')
+              .bundle()
             file.path = file.path.slice(0, file.path.length - 10) + '.js'
             next(null, file)
           } else {
