@@ -119,14 +119,14 @@
 }
 
 .doc div.toc {
-    background-color: rgb(246, 239, 255);
-    margin: 1rem 2rem 0rem;
-    padding: 0.1rem 0.3rem;
-    border-radius: 10px;
+  background-color: rgb(246, 239, 255);
+  margin: 1rem 2rem 0;
+  padding: 0.1rem 0.3rem;
+  border-radius: 10px;
 }
 
 #toctitle {
-    font-size: 120%;
+  font-size: 120%;
 }
 
 .doc table.tableblock {
