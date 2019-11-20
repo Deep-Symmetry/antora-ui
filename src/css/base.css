@@ -41,6 +41,7 @@ code,
 kbd,
 pre {
   font-family: var(--monospace-font-family);
+  hyphens: none;
 }
 
 b,
