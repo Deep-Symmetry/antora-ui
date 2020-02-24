@@ -186,8 +186,8 @@ The UI bundle will again be available at [.path]_build/ui-bundle.zip_.
 
 == Copyright and License
 
-Copyright (C) 2017-2019 OpenDevise Inc. and the Antora Project.
-Copyright (C) 2019 Deep Symmery, LLC.
+Copyright (C) 2017-2020 OpenDevise Inc. and the Antora Project.
+Copyright (C) 2019-2020 Deep Symmery, LLC.
 
 Use of this software is granted under the terms of the
 https://www.mozilla.org/en-US/MPL/2.0/[Mozilla Public License Version
