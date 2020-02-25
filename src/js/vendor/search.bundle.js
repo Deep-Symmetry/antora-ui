@@ -1,5 +1,5 @@
 /* eslint-env browser */
-window.antoraLunr = (function (lunr) {
+;window.antoraLunr = (function (lunr) {
   var searchInput = document.getElementById('search-input')
   var searchResult = document.createElement('div')
   searchResult.classList.add('search-result-dropdown-menu')
@@ -179,4 +179,4 @@ window.antoraLunr = (function (lunr) {
   return {
     init: init,
   }
-})(window.lunr)
+})(require('lunr/lunr.js'))
