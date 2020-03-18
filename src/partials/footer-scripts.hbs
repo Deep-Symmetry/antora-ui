@@ -3,24 +3,6 @@
   window.antora.basePath = '{{or siteRootPath (or site.url siteRootUrl)}}'
   window.antora.pagePath = '{{@root.page.url}}'
 </script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  messageStyle: "none",
-  tex2jax: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
-  },
-  asciimath2jax: {
-    delimiters: [["\\$", "\\$"]],
-    ignoreClass: "nostem|noasciimath"
-  },
-  TeX: { equationNumbers: { autoNumber: "none" } }
-});
-</script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
 <script src="{{uiRootPath}}/js/site.js"></script>
 {{#if (eq env.DOCSEARCH_ENGINE 'lunr')}}
 <script src="{{uiRootPath}}/js/vendor/search.js"></script>
