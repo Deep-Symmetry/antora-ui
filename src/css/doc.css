@@ -648,3 +648,7 @@
   font-weight: var(--body-font-weight-bold);
   line-height: calc(1 / 1.1);
 }
+
+.doc .bytefield svg {
+  max-width: 100%;
+}
