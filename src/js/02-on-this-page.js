@@ -3,7 +3,7 @@
 
   var sidebar = document.querySelector('aside.toc.sidebar')
   if (!sidebar) return
-  if (document.querySelector('body.-toc')) return void sidebar.parentNode.removeChild(sidebar)
+  if (document.querySelector('body.-toc')) return sidebar.parentNode.removeChild(sidebar)
   var levels = parseInt(sidebar.dataset.levels || 2)
   if (levels < 0) return
 
@@ -11,15 +11,13 @@
   var headings
   var headingSelector = []
   for (var l = 0; l <= levels; l++) headingSelector.push(l ? '.sect' + l + '>h' + (l + 1) + '[id]' : 'h1[id].sect0')
-  if (!(headings = find(headingSelector.join(','), article)).length) return void sidebar.parentNode.removeChild(sidebar)
+  if (!(headings = find(headingSelector.join(','), article)).length) return sidebar.parentNode.removeChild(sidebar)
 
   var lastActiveFragment
   var links = {}
   var list = headings.reduce(function (accum, heading) {
-    var link = toArray(heading.childNodes).reduce(function (target, child) {
-      if (child.nodeName !== 'A') target.appendChild(child.cloneNode(true))
-      return target
-    }, document.createElement('a'))
+    var link = document.createElement('a')
+    link.textContent = heading.textContent
     links[(link.href = '#' + heading.id)] = link
     var listItem = document.createElement('li')
     listItem.dataset.level = parseInt(heading.nodeName.slice(1)) - 1
@@ -97,11 +95,7 @@
   }
 
   function find (selector, from) {
-    return toArray((from || document).querySelectorAll(selector))
-  }
-
-  function toArray (collection) {
-    return [].slice.call(collection)
+    return [].slice.call((from || document).querySelectorAll(selector))
   }
 
   function getNumericStyleVal (el, prop) {
