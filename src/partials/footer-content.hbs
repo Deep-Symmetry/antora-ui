@@ -1,6 +1,15 @@
 <footer class="footer">
   <div class="center-image">
-    <span>This page was built using
+    <span>
+      <a href="http://deepsymmetry.org">
+        <img src="../_/img/ds-logo.png" alt="Deep Symmetry logo" width="83" height="51" style="margin-right:1em">
+      </a>
+    </span>
+    <span>
+      {{#if page.attributes.copyright}}
+      Copyright &copy; {{page.attributes.copyright}} <a href="http://deepsymmetry.org">Deep Symmetry, LLC</a>.
+      {{/if}}
+      This page was built using
       a <a href="https://github.com/Deep-Symmetry/antora-ui">modified
       version</a> of the Antora default UI. The source code for this UI is
       licensed under the terms of the MPL-2.0 license.</span>
