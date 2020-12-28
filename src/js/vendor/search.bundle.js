@@ -1,5 +1,7 @@
 /* eslint-env browser */
-;window.antoraLunr = (function (lunr) {
+window.antoraLunr = (function (lunr) {
+  var scriptAttrs = document.getElementById('search-script').dataset
+  var basePath = scriptAttrs.basePath
   var searchInput = document.getElementById('search-input')
   var searchResult = document.createElement('div')
   searchResult.classList.add('search-result-dropdown-menu')
@@ -90,6 +92,21 @@
     return hits
   }
 
+  function createSearchResult (result, store, searchResultDataset) {
+    result.forEach(function (item) {
+      var url = item.ref
+      var hash
+      if (url.includes('#')) {
+        hash = url.substring(url.indexOf('#') + 1)
+        url = url.replace('#' + hash, '')
+      }
+      var doc = store[url]
+      var metadata = item.matchData.metadata
+      var hits = highlightHit(metadata, hash, doc)
+      searchResultDataset.appendChild(createSearchResultItem(doc, item, hits))
+    })
+  }
+
   function createSearchResultItem (doc, item, hits) {
     var documentTitle = document.createElement('div')
     documentTitle.classList.add('search-result-document-title')
@@ -97,7 +114,8 @@
     var documentHit = document.createElement('div')
     documentHit.classList.add('search-result-document-hit')
     var documentHitLink = document.createElement('a')
-    documentHitLink.href = item.ref
+    var rootPath = basePath
+    documentHitLink.href = rootPath + item.ref
     documentHit.appendChild(documentHitLink)
     hits.forEach(function (hit) {
       documentHitLink.appendChild(hit)
@@ -106,6 +124,9 @@
     searchResultItem.classList.add('search-result-item')
     searchResultItem.appendChild(documentTitle)
     searchResultItem.appendChild(documentHit)
+    searchResultItem.addEventListener('mousedown', function (e) {
+      e.preventDefault()
+    })
     return searchResultItem
   }
 
@@ -121,6 +142,22 @@
     return searchResultItem
   }
 
+  function search (index, text) {
+    // execute an exact match search
+    var result = index.search(text)
+    if (result.length > 0) {
+      return result
+    }
+    // no result, use a begins with search
+    result = index.search(text + '*')
+    if (result.length > 0) {
+      return result
+    }
+    // no result, use a contains search
+    result = index.search('*' + text + '*')
+    return result
+  }
+
   function searchIndex (index, store, text) {
     // reset search result
     while (searchResult.firstChild) {
@@ -129,23 +166,12 @@
     if (text.trim() === '') {
       return
     }
-    var result = index.search(text)
+    var result = search(index, text)
     var searchResultDataset = document.createElement('div')
     searchResultDataset.classList.add('search-result-dataset')
     searchResult.appendChild(searchResultDataset)
     if (result.length > 0) {
-      result.forEach(function (item) {
-        var url = item.ref
-        var hash
-        if (url.includes('#')) {
-          hash = url.substring(url.indexOf('#') + 1)
-          url = url.replace('#' + hash, '')
-        }
-        var doc = store[url]
-        var metadata = item.matchData.metadata
-        var hits = highlightHit(metadata, hash, doc)
-        searchResultDataset.appendChild(createSearchResultItem(doc, item, hits))
-      })
+      createSearchResult(result, store, searchResultDataset)
     } else {
       searchResultDataset.appendChild(createNoResult(text))
     }
@@ -172,8 +198,14 @@
     var search = debounce(function () {
       searchIndex(index.index, index.store, searchInput.value)
     }, 100)
-    // TODO listen to blur, focus and input events
     searchInput.addEventListener('keydown', search)
+
+    // this is prevented in case of mousedown attached to SearchResultItem
+    searchInput.addEventListener('blur', function (e) {
+      while (searchResult.firstChild) {
+        searchResult.removeChild(searchResult.firstChild)
+      }
+    })
   }
 
   return {
