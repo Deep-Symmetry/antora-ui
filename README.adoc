@@ -193,16 +193,16 @@ These map files sit adjacent to the combined files in the build folder.
 The mapping they provide allows the debugger to present the original source rather than the obfuscated file, an essential tool for debugging.
 
 In preview mode, source maps are enabled automatically, so there's nothing you have to do to make use of them.
-If you need to include source maps in the bundle, you can do so by setting the `SOURCEMAPS` environment varible to `true` when you run the bundle command:
+If you need to include source maps in the bundle, you can do so by setting the `SOURCEMAPS` environment variable to `true` when you run the bundle command:
 
  $ SOURCEMAPS=true gulp bundle
 
-In this case, the bundle will include the source maps, which can be used for debuggging your production site.
+In this case, the bundle will include the source maps, which can be used for debugging your production site.
 
 == Copyright and License
 
-Copyright (C) 2017-2020 OpenDevise Inc. and the Antora Project.
-Copyright (C) 2019-2020 Deep Symmery, LLC.
+Copyright (C) 2017-present OpenDevise Inc. and the Antora Project.
+Copyright (C) 2019-present Deep Symmery, LLC.
 
 Use of this software is granted under the terms of the
 https://www.mozilla.org/en-US/MPL/2.0/[Mozilla Public License Version

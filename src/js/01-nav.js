@@ -32,11 +32,11 @@
     }
   })
 
-  nav.querySelector('.context').addEventListener('click', function () {
-    var currentPanel = nav.querySelector('.is-active[data-panel]')
-    var activatePanel = currentPanel.dataset.panel === 'menu' ? 'explore' : 'menu'
-    currentPanel.classList.toggle('is-active')
-    nav.querySelector('[data-panel=' + activatePanel + ']').classList.toggle('is-active')
+  nav.querySelector('[data-panel=explore] .context').addEventListener('click', function () {
+    // NOTE logic assumes there are only two panels
+    find(nav, '[data-panel]').forEach(function (panel) {
+      panel.classList.toggle('is-active')
+    })
   })
 
   // NOTE prevent text from being selected by double click
@@ -100,7 +100,13 @@
   }
 
   function toggleActive () {
-    this.classList.toggle('is-active')
+    if (this.classList.toggle('is-active')) {
+      var padding = parseFloat(window.getComputedStyle(this).marginTop)
+      var rect = this.getBoundingClientRect()
+      var menuPanelRect = menuPanel.getBoundingClientRect()
+      var overflowY = (rect.bottom - menuPanelRect.top - menuPanelRect.height + padding).toFixed()
+      if (overflowY > 0) menuPanel.scrollTop += Math.min((rect.top - menuPanelRect.top - padding).toFixed(), overflowY)
+    }
   }
 
   function showNav (e) {
