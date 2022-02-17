@@ -954,10 +954,6 @@
   word-wrap: normal;
 }
 
-.doc .bytefield svg {
-  max-width: 100%;
-}
-
 #footnotes {
   font-size: 0.85em;
   line-height: 1.5;
@@ -987,4 +983,8 @@
   margin-left: -2em;
   text-align: right;
   width: 1.5em;
+}
+
+.doc .bytefield svg {
+  max-width: 100%;
 }
