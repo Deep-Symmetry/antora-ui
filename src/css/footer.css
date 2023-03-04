@@ -19,9 +19,3 @@ footer.footer {
 .footer a {
   color: var(--footer-link-font-color);
 }
-
-.netlify-badge {
-  float: right;
-  vertical-align: middle;
-  padding-left: 1rem;
-}
