@@ -133,6 +133,10 @@ body {
   padding: 0.5rem 1rem;
 }
 
+.navbar-item.sponsor {
+  color: var(--navbar-menu-sponsor-color);
+}
+
 .navbar-item.has-dropdown {
   padding: 0;
 }
